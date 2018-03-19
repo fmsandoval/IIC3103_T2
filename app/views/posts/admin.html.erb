@@ -1,0 +1,37 @@
+<h1>Posts#admin</h1>
+<p>Find me in app/views/posts/admin.html.erb</p>
+
+<p class="navbar-text pull-right">
+  <% if admin_signed_in? %>
+    Logged in as <strong><%= current_admin.email %></strong>.
+    <%= link_to "Logout", destroy_admin_session_path, method: :delete, :class => 'navbar-link'  %>
+  <% else %>
+    <%= link_to "Login", new_admin_session_path, :class => 'navbar-link'  %>
+  <% end %>
+</p>
+
+<%= link_to 'Back', posts_path %>
+
+<h1>Listing posts</h1>
+
+<% if admin_signed_in? %>
+  <%= link_to 'New post', new_post_path %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Date</th>
+  </tr>
+
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.created_at %></td>
+      <td><%= link_to 'Edit', edit_post_path(post) %></td>
+      <td><%= link_to 'Destroy', post_path(post),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,44 @@
+<h1>Posts#show</h1>
+<p>Find me in app/views/posts/show.html.erb</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Lead:</strong>
+  <%= @post.lead %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @post.created_at %>
+</p>
+
+<h2>Comments</h2>
+
+<table>
+  <tr>
+    <th>Commenter</th>
+    <th>Body</th>
+  </tr>
+
+  <% @post.comments.each do |comment| %>
+    <tr>
+      <td><%= comment.commenter %></td>
+      <td><%= comment.body %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>
+
+<%= link_to 'Back', posts_path %>
