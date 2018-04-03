@@ -9,4 +9,24 @@ class Post < ApplicationRecord
   validates :body,
             presence: true,
             length: { minimum: 5 }
+
+  def as_json options={}
+    {
+        id: self.id,
+        title: self.title,
+        subtitle: self.lead,
+        body: self.body,
+        created_at: self.created_at
+    }
+  end
+
+  def short_body
+    if self.body.length <= 500
+      return self.body
+    end
+    short = self.body[0..499]
+    short << '...'
+    return short
+  end
+
 end
