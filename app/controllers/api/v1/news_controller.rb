@@ -4,7 +4,6 @@ class Api::V1::NewsController < ApplicationController
   def index
     @posts = Post.all
     render json: @posts.to_json, status: 200
-
   end
 
   def show
@@ -60,33 +59,6 @@ class Api::V1::NewsController < ApplicationController
     end
   end
 
-  def comment_index
-    @post = Post.find_by_id(params[:id])
-    if @post.nil?
-      render json: { error: 'not found' }, status: 404
-    else
-      @comments = @post.comments
-      render json: @comments.to_json, status: 200
-    end
-  end
-
-  def comment_create
-    @post = Post.find_by_id(params[:id])
-    if @post.nil?
-      render json: { error: 'not found' }, status: 404
-    else
-      if !check_params_create_comment
-        render json: { error: 'params error' }, status: 400
-      else
-        @comment = @post.comments.new(commenter: params[:author], body: params[:comment])
-        if @comment.save
-          render json: @comment.to_json, status: 201
-        else
-          render json: { error: 'not created' }, status: 400
-        end
-      end
-    end
-  end
 
   private
   def create_new_params
@@ -107,13 +79,5 @@ class Api::V1::NewsController < ApplicationController
     !(permitted[:title].nil? && permitted[:subtitle].nil? && permitted[:body].nil?)
   end
 
-  def create_new_comment_params
-    params.permit(:author, :comment)
-  end
-
-  def check_params_create_comment
-    permitted = create_new_comment_params
-    !(permitted[:author].nil? && permitted[:comment].nil?)
-  end
 
 end

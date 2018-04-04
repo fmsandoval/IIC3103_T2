@@ -19,8 +19,11 @@ Rails.application.routes.draw do
       patch '/news/:id' => 'news#update'
       delete '/news/:id' => 'news#destroy'
 
-      get '/news/:id/comments' => 'news#comment_index'
-      post '/news/:id/comments' => 'news#comment_create'
+      get '/news/:id/comments' => 'comments#index'
+      post '/news/:id/comments' => 'comments#create'
+      get '/news/:news_id/comments/:id' => 'comments#show'
+      patch '/news/:news_id/comments/:id' => 'comments#update'
+      delete '/news/:news_id/comments/:id' => 'comments#destroy'
     end
   end
 
